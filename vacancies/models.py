@@ -30,6 +30,7 @@ class Vacancy(models.Model):
     class Meta:
         verbose_name = "Вакансия"
         verbose_name_plural = "Вакансии"
+        # ordering = ["text"] не очень хороший способ сортировки
 
     def __str__(self):
         return self.slug
