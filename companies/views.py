@@ -15,7 +15,7 @@ class CompanyImageView(UpdateView):
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
 
-        self.object.logo = request.FILWS['logo']
+        self.object.logo = request.FILES['logo']
         self.object.save()
 
         return JsonResponse({
