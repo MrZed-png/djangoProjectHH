@@ -31,6 +31,20 @@ class VacancyListView(ListAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyListSerializer
 
+    def get(self, requests, *args, **kwargs):
+        vacancy_text = requests.GET.get('text', None)
+        if vacancy_text:
+            self.queryset = self.queryset.filter(
+                text__icontains=vacancy_text
+            )
+        skill_name = requests.GET.get('skill', None)
+        if skill_name:
+            self.queryset = self.queryset.filter(
+                skills__name__icontains=skill_name
+            )
+
+        return super().get(requests, *args, **kwargs)
+
 
 class VacancyDetailView(RetrieveAPIView):
     model = Vacancy
