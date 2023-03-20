@@ -10,15 +10,21 @@ from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from rest_framework.generics import ListAPIView, RetrieveAPIView, CreateAPIView, UpdateAPIView, DestroyAPIView
+from rest_framework.viewsets import ModelViewSet
 
 from djangoProject1 import settings
 from vacancies.models import Vacancy, Skill
 from vacancies.serializes import VacancyDetailSerializer, VacancyListSerializer, VacancyCreateSerializer, \
-    VacancyUpdateSerializer, VacancyDestroySerializer
+    VacancyUpdateSerializer, VacancyDestroySerializer, SkillsSerializer
 
 
 def hello(request):
     return HttpResponse('request')
+
+
+class SkillsViewSet(ModelViewSet):
+    queryset = Skill.objects.all()
+    serializer_class = SkillsSerializer
 
 
 class VacancyListView(ListAPIView):
@@ -31,11 +37,6 @@ class VacancyDetailView(RetrieveAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyDetailSerializer
 
-    # def get(self, request, *args, **kwargs):
-    #     vacancy = self.get_object()
-    #
-    #     return JsonResponse(VacancyDetailSerializer(vacancy).data)
-
 
 class VacancyCreateView(CreateAPIView):
     queryset = Vacancy.objects.all()
@@ -47,7 +48,6 @@ class VacancyUpdateView(UpdateAPIView):
     serializer_class = VacancyUpdateSerializer
 
 
-@method_decorator(csrf_exempt, name='dispatch')
 class VacancyDeleteView(DestroyAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyDestroySerializer
