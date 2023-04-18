@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueValidator
 
 from vacancies.models import Vacancy, Skill
 
@@ -41,6 +42,11 @@ class VacancyCreateSerializer(serializers.ModelSerializer):
         required=False,
         queryset=Skill.objects.all(),
         slug_field="name"
+    )
+
+    slug = serializers.CharField(
+        max_length=50,
+        validators=[UniqueValidator(queryset=Vacancy.objects.all())]
     )
 
     class Meta:
