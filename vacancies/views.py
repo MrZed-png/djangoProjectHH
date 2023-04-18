@@ -14,6 +14,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from djangoProject1 import settings
 from vacancies.models import Vacancy, Skill
+from vacancies.premissions import VacancyCreatePermission
 from vacancies.serializes import VacancyDetailSerializer, VacancyListSerializer, VacancyCreateSerializer, \
     VacancyUpdateSerializer, VacancyDestroySerializer, SkillsSerializer
 
@@ -55,6 +56,7 @@ class VacancyDetailView(RetrieveAPIView):
 class VacancyCreateView(CreateAPIView):
     queryset = Vacancy.objects.all()
     serializer_class = VacancyCreateSerializer
+    permission_classes = [VacancyCreatePermission]
 
 
 class VacancyUpdateView(UpdateAPIView):
